@@ -22,27 +22,16 @@ Vagrant::Config.run do |config|
   # The deeper the files the slower the share
   config.vm.share_folder 'Sunspot', '/var/www/sunspot', '/var/www/sunspot'
 
+  config.vm.provision :chef_client do |chef|
+    # Organization url
+    chef.chef_server_url           = "https://api.opscode.com/organizations/aust"
+    # Name to give the node
+    chef.node_name                 = "testbox"
+    # Client key path
+    chef.validation_key_path       = "chef/keys/aust-validator.pem"
+    # Using the Opscode platform, validator client: ORGNAME-validator
+    chef.validation_client_name    = "aust-validator"
 
-  # Enable provisioning with chef server, specifying the chef server URL,
-  # and the path to the validation key (relative to this Vagrantfile).
-  #
-  # The Opscode Platform uses HTTPS. Substitute your organization for
-  # ORGNAME in the URL and validation key.
-  #
-  # If you have your own Chef Server, use the appropriate URL, which may be
-  # HTTP instead of HTTPS depending on your configuration. Also change the
-  # validation key to validation.pem.
-  #
-  # config.vm.provision :chef_client do |chef|
-  #   chef.chef_server_url = "https://api.opscode.com/organizations/ORGNAME"
-  #   chef.validation_key_path = "ORGNAME-validator.pem"
-  # end
-  #
-  # If you're using the Opscode platform, your validator client is
-  # ORGNAME-validator, replacing ORGNAME with your organization name.
-  #
-  # IF you have your own Chef Server, the default validation client name is
-  # chef-validator, unless you changed the configuration.
-  #
-  #   chef.validation_client_name = "ORGNAME-validator"
+    chef.add_role "base_setup"
+  end
 end
