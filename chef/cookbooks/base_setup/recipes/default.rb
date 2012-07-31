@@ -6,11 +6,11 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-base = data_bag_item('setup', 'setup').to_hash
+base = data_bag_item('base', 'setup').to_hash
 
 
 base['packages'].keys.each do |pack|
-  puts "***** Attempting install of '#{pack}' *****"
+  puts "***** Installing of '#{pack}' *****"
   package pack do
     action :install
   end
