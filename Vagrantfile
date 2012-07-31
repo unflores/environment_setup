@@ -33,5 +33,6 @@ Vagrant::Config.run do |config|
     chef.validation_client_name    = "aust-validator"
 
     chef.add_role "base_setup"
+    chef.add_recipe "nginx"
   end
 end
